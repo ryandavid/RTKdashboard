@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>RTKdashboard.png</file>
+    </qresource>
+</RCC>

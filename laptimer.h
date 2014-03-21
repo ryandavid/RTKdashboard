@@ -17,6 +17,7 @@ public:
     void stopTimer();
     float readCurrentLapTime();
     float readBestLapTime();
+    float readLastLapTime();
     int readCurrentLapNum();
     int readBestLapNum();
 
@@ -36,9 +37,11 @@ private:
     float currentTime, bestLapTime, lastLapTime;
 
     QVector3D lastPosition;
-    QVector3D line1, line2;
+    QVector3D finishPoint1, finishPoint2;
 
     int currentLapNum, bestLapNum;
+
+    bool isNewLap(QVector3D currentPosition, QVector3D lastPosition);
 };
 
 #endif // LAPTIMER_H

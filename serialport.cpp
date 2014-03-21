@@ -42,79 +42,12 @@ bool serialPort::showSettingsDialog(){
     }
 }
 
-int serialPort::getBaudRate(){
-    return baudRate;
-}
-
-void serialPort::setBaudRate(int newRate){
-    switch(newRate){
-        case(9600):
-            baudRate = 9600;
-            break;
-
-        case(38400):
-            baudRate = 38400;
-            break;
-
-        case(57600):
-            baudRate = 57600;
-            break;
-
-        case(115200):
-            baudRate = 115200;
-            break;
-
-        default:
-            baudRate = 115200;
-    }
-}
-
-int serialPort::getParity(){
-    return parity;
-}
-
-void serialPort::setParity(int par){
-
-}
-
-
-QString *serialPort::getPortName(){
-    return portName;
-}
-
-void serialPort::setPortName(QString &newName){
-    //portName = *newName;
-}
-
-int serialPort::getStopBits(){
-    return stopBits;
-}
-
-void serialPort::setStopBits(int bits){
-    stopBits = bits;    // TODO: Validate this input
-}
-
-
-int serialPort::getDataBits(){
-    return dataBits;
-}
-
-void serialPort::setDataBits(int bits){
-    dataBits = bits;    // TODO: Validate this input
-}
-
-bool serialPort::getFlowControl(){
-    return flowControl;
-}
-
-void serialPort::setFlowControl(bool fc){
-    flowControl = fc;
-}
-
-
 void serialPort::connect(){
+    SettingsDialog::Settings currentSettings = settings->settings();
+
     if(!connected){
-        serial->setPortName("serial1");
+        //serial->setPortName("serial1");
+        serial->setPortName(currentSettings.name);
 
         if( serial->open(QIODevice::ReadWrite) ){
             connected = true;
@@ -122,11 +55,11 @@ void serialPort::connect(){
             connected = false;
         }
 
-        serial->setBaudRate(QSerialPort::Baud115200);
-        serial->setDataBits(QSerialPort::Data8);
-        serial->setParity(QSerialPort::NoParity);
-        serial->setStopBits(QSerialPort::OneStop);
-        serial->setFlowControl(QSerialPort::NoFlowControl);
+        serial->setBaudRate(currentSettings.baudRate);
+        serial->setDataBits(currentSettings.dataBits);
+        serial->setParity(currentSettings.parity);
+        serial->setStopBits(currentSettings.stopBits);
+        serial->setFlowControl(currentSettings.flowControl);
     }
 }
 

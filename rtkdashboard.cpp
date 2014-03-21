@@ -158,9 +158,11 @@ void RTKdashboard::lapTimerNewLap(){
     if(lap->readCurrentLapNum() == 0){
         ui->label_BestLap->setText( tr("N/A") );
         ui->label_BestLapTime->setText( "N/A" );
+        ui->label_lastLapTime->setText( "N/A" );
     }else{
         ui->label_BestLap->setText( QString::number(lap->readBestLapNum()) );
         ui->label_BestLapTime->setText( QString::number(lap->readBestLapTime(), 'f', 3) );
+        ui->label_lastLapTime->setText( QString::number(lap->readLastLapTime()) );
     }
 
 }

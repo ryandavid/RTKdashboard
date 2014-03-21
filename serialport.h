@@ -18,24 +18,6 @@ public:
 
     bool showSettingsDialog();
 
-    QString *getPortName();      // Read ASCII port name
-    void setPortName(QString &newName);      // Set ASCII port name
-
-    int getBaudRate();      // Read current baud rate
-    void setBaudRate(int newRate);      // Set current baud rate
-
-    int getDataBits();      // Get data bits per transfer
-    void setDataBits(int bits);      // Set data bits per transfer
-
-    int getParity();
-    void setParity(int par);
-
-    int getStopBits();
-    void setStopBits(int bits);
-
-    bool getFlowControl();
-    void setFlowControl(bool fc);
-
     void connect();
     void disconnect();
 

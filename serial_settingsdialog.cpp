@@ -41,7 +41,7 @@
 ****************************************************************************/
 
 #include "serial_settingsdialog.h"
-#include "ui_settingsdialog.h"
+#include "ui_serial_settingsdialog.h"
 
 #include <QtSerialPort/QSerialPortInfo>
 #include <QIntValidator>

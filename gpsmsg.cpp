@@ -324,21 +324,21 @@ void gpsMsg::processPacket(){
                     ((int)rxRecordData->at(index + 7) << 0);
 
             positionTimeUTC.numOfSV = rxRecordData->at(index + 8);
-            positionTimeUTC.newPosition = (bool)(rxRecordData->at(index + 8) & 0b00000001);
-            positionTimeUTC.newClockThisSolution = (bool)(rxRecordData->at(index + 8) & 0b00000010);
-            positionTimeUTC.newHorizontalThisSolution = (bool)(rxRecordData->at(index + 8) & 0b00000100);
-            positionTimeUTC.newHeightThisSolution = (bool)(rxRecordData->at(index + 8) & 0b00010000);
-            positionTimeUTC.usesLeastSquaresPosition = (bool)(rxRecordData->at(index + 8) & 0b00100000);
-            positionTimeUTC.usesFilteredL1 = (bool)(rxRecordData->at(index + 8) & 0b10000000);
+            positionTimeUTC.newPosition = (bool)(rxRecordData->at(index + 9) & 0b00000001);
+            positionTimeUTC.newClockThisSolution = (bool)(rxRecordData->at(index + 9) & 0b00000010);
+            positionTimeUTC.newHorizontalThisSolution = (bool)(rxRecordData->at(index + 9) & 0b00000100);
+            positionTimeUTC.newHeightThisSolution = (bool)(rxRecordData->at(index + 9) & 0b00001000);
+            positionTimeUTC.usesLeastSquaresPosition = (bool)(rxRecordData->at(index + 9) & 0b00100000);
+            positionTimeUTC.usesFilteredL1 = (bool)(rxRecordData->at(index + 9) & 0b10000000);
 
-            positionTimeUTC.isDifferential = (bool)(rxRecordData->at(index + 9) & 0b00000001);
-            positionTimeUTC.isPhase = (bool)(rxRecordData->at(index + 9) & 0b00000010);
-            positionTimeUTC.isFixedInteger = (bool)(rxRecordData->at(index + 9) & 0b00000100);
-            positionTimeUTC.isOmnistar = (bool)(rxRecordData->at(index + 9) & 0b00001000);
-            positionTimeUTC.isStatic = (bool)(rxRecordData->at(index + 9) & 0b00010000);
-            positionTimeUTC.isNetworkRTK = (bool)(rxRecordData->at(index + 9) & 0b00100000);
+            positionTimeUTC.isDifferential = (bool)(rxRecordData->at(index + 10) & 0b00000001);
+            positionTimeUTC.isPhase = (bool)(rxRecordData->at(index + 10) & 0b00000010);
+            positionTimeUTC.isFixedInteger = (bool)(rxRecordData->at(index + 10) & 0b00000100);
+            positionTimeUTC.isOmnistar = (bool)(rxRecordData->at(index + 10) & 0b00001000);
+            positionTimeUTC.isStatic = (bool)(rxRecordData->at(index + 10) & 0b00010000);
+            positionTimeUTC.isNetworkRTK = (bool)(rxRecordData->at(index + 10) & 0b00100000);
 
-            positionTimeUTC.initCounter = rxRecordData->at(index + 10) & 0xFF;
+            positionTimeUTC.initCounter = rxRecordData->at(index + 11) & 0xFF;
 
             emit newTimeAvailable();
             break;

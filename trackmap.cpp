@@ -37,6 +37,13 @@ void trackmap::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->drawLine(x1, y1, x2, y2);
     }
 
+    // Draw the finish line
+    painter->setPen(Qt::red);
+    painter->drawLine((finishPoint1.x() - normalizeXmin) * scaling,
+                      (normalizeYmax - finishPoint1.y()) * scaling,
+                      (finishPoint2.x() - normalizeXmin) * scaling,
+                      (normalizeYmax - finishPoint2.y()) * scaling);
+
 }
 
 void trackmap::loadTrackmap(QString path){
@@ -55,14 +62,11 @@ void trackmap::loadTrackmap(QString path){
     doc.setContent(file);
 
     QDomElement root = doc.firstChildElement();
-    QDomNodeList outside = root.elementsByTagName("outsidePath");
-    QDomNodeList inside = root.elementsByTagName("insidePath");
 
-    QDomNode outsideNode = outside.at(0);
-    QDomNode insideNode = inside.at(0);
-
-    QDomElement outsideCoordinates = outsideNode.firstChildElement("coordinates");
-    QDomElement insideCoordinates = insideNode.firstChildElement("coordinates");
+    QDomElement outsideCoordinates = root.elementsByTagName("outsidePath").at(0).firstChildElement("coordinates");
+    QDomElement insideCoordinates = root.elementsByTagName("insidePath").at(0).firstChildElement("coordinates");
+    QDomElement finishPoint1coordinates = root.elementsByTagName("finishPoint1").at(0).firstChildElement("coordinates");
+    QDomElement finishPoint2coordinates = root.elementsByTagName("finishPoint2").at(0).firstChildElement("coordinates");
 
     outsideLine = outsideCoordinates.text().split("\n");
     insideLine = insideCoordinates.text().split("\n");
@@ -76,6 +80,16 @@ void trackmap::loadTrackmap(QString path){
         coordinatePairs = insideLine.at(i).split(",");
         insidePath.append( new QVector3D( coordinatePairs.at(0).toFloat(), coordinatePairs.at(1).toFloat(), coordinatePairs.at(2).toFloat() ) );
     }
+
+    coordinatePairs = finishPoint1coordinates.text().split(",");
+    finishPoint1.setX(coordinatePairs.at(0).toFloat());
+    finishPoint1.setY(coordinatePairs.at(1).toFloat());
+    finishPoint1.setZ(coordinatePairs.at(2).toFloat());
+
+    coordinatePairs = finishPoint2coordinates.text().split(",");
+    finishPoint2.setX(coordinatePairs.at(0).toFloat());
+    finishPoint2.setY(coordinatePairs.at(1).toFloat());
+    finishPoint2.setZ(coordinatePairs.at(2).toFloat());
 
     file->close();
 
@@ -136,4 +150,13 @@ QVector3D trackmap::worldToViewCoordinates(QVector3D realCoordinates){
 
 bool trackmap::isValid(){
     return trackValidity;
+}
+
+QList<QVector3D> trackmap::readFinishLine(){
+    QList<QVector3D> finishLine;
+
+    finishLine.append(finishPoint1);
+    finishLine.append(finishPoint2);
+
+    return finishLine;
 }

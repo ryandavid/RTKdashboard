@@ -78,7 +78,7 @@ void RTKdashboard::on_actionConnected_triggered(){
 // SLOT
 void RTKdashboard::gpsIsConnected_change(bool newState){
     if(newState == true){
-        lap->initTimer( QVector3D(0, 0, 0), QVector3D(0,0,0) );
+        lap->startTimer();
         ui->statusBar->showMessage("Connected");
     }else{
         lap->stopTimer();
@@ -124,6 +124,8 @@ void RTKdashboard::on_verticalSlider_sliderMoved(int position)
 
 void RTKdashboard::on_actionOpen_Track_Map_triggered()
 {
+    QList<QVector3D> finishLine;
+
     QString filename = QFileDialog::getOpenFileName(this, "Open Trackmap", QDir::homePath(), tr("Trackmaps (*.xml)"));
 
     if(filename != QString::null){
@@ -133,6 +135,9 @@ void RTKdashboard::on_actionOpen_Track_Map_triggered()
         ui->graphicsView->centerOn(0, 0);
         ui->verticalSlider->setValue(50);
     }
+
+    finishLine = track->readFinishLine();
+    lap->initTimer( finishLine.at(0), finishLine.at(1) );
 }
 
 void RTKdashboard::on_actionReceiver_Details_triggered()

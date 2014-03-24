@@ -51,9 +51,10 @@ void laptimer::initTimer(QVector3D pos1, QVector3D pos2){
     lastPosition.setX( 0 );
     lastPosition.setY( 0 );
     lastPosition.setZ( 0 );
+}
 
+void laptimer::startTimer(){
     timer->start(100);
-
     emit newLap();
 }
 

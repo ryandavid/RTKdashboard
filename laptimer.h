@@ -14,6 +14,7 @@ public:
     ~laptimer();
 
     void initTimer(QVector3D pos1, QVector3D pos2);
+    void startTimer();
     void stopTimer();
     float readCurrentLapTime();
     float readBestLapTime();

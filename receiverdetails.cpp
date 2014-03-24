@@ -108,24 +108,17 @@ void receiverDetails::newGpsSigmaAvailable(){
 
 void receiverDetails::newGpsTimeAvailable(){
     ui->labelTime->setText( QString::number(gps->positionTimeUTC.millisecondsOfWeek) );
+    QString modeText;
 
 
-    if( gps->positionTimeUTC.isDifferential & gps->positionTimeUTC.isPhase & gps->positionTimeUTC.isFixedInteger){
-        ui->labelMode->setText("RTK Fixed Integer");
+    if(gps->positionTimeUTC.isDifferential) modeText.append(tr("DIFF "));
+    if(gps->positionTimeUTC.isPhase) modeText.append(tr("PHASE "));
+    if(gps->positionTimeUTC.isFixedInteger) modeText.append(tr("FIXED "));
+    if(gps->positionTimeUTC.isOmnistar) modeText.append(tr("OMNI "));
+    if(gps->positionTimeUTC.isStatic) modeText.append(tr("STATIC "));
+    if(gps->positionTimeUTC.isNetworkRTK) modeText.append(tr("NETRTK "));
 
-    }else if( gps->positionTimeUTC.isDifferential & gps->positionTimeUTC.isPhase & !gps->positionTimeUTC.isFixedInteger){
-        ui->labelMode->setText("RTK Float");
-
-    }else if( !gps->positionTimeUTC.isDifferential & !gps->positionTimeUTC.isFixedInteger & !gps->positionTimeUTC.isStatic){
-        ui->labelMode->setText("WAAS");
-    }
-    else if( gps->positionTimeUTC.isDifferential & !gps->positionTimeUTC.isFixedInteger & !gps->positionTimeUTC.isStatic){
-        ui->labelMode->setText("Autonomous");
-    }else{
-        ui->labelMode->setText("Invalid");
-    }
-
-
+    ui->labelMode->setText(modeText);
 }
 
 void receiverDetails::newGpsVelocityAvailable(){

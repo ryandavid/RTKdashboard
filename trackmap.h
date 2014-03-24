@@ -20,6 +20,7 @@ public:
     QVector3D worldToViewCoordinates(QVector3D realCoordinates);
     void loadTrackmap(QString path);
     bool isValid();
+    QList<QVector3D> readFinishLine();
 
 
 private:
@@ -28,6 +29,8 @@ private:
     // Latitude, Longitude, Altitude
     QList<QVector3D*> outsidePath;
     QList<QVector3D*> insidePath;
+
+    QVector3D finishPoint1, finishPoint2;
 
     float normalizeXmin;
     float normalizeXmax;
